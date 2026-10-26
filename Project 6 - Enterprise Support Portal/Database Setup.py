@@ -15,10 +15,15 @@ cursor.execute("""
 """)        #if there isnt one already, it creates a table with columns for ID ( which is an integer and has unique ID 
                #which is automatically assigned), and also columns for department, issue, priority and status (all text)
 
-cursor.execute("INSERT INTO tickets (department, issue, priority, status) VALUES (?, ?, ?, ?)",     #insert a new row
-               ("Warehouse", "Barcode scanner offline", "High", "Open"))                                                           #with these values 
-cursor.execute("INSERT INTO tickets (department, issue, priority, status) VALUES (?, ?, ?, ?)",    #tuple fills question marks
-               ("Logistics", "ERP delivery ETA not syncing", "Medium", "Open"))                                             #in the exact same order
+cursor.execute("SELECT COUNT(*) FROM tickets")
+ticket_count = cursor.fetchone()[0]
+
+# Only insert the sample tickets if the table is empty (first time running)
+if ticket_count == 0:
+    cursor.execute("INSERT INTO tickets (department, issue, priority, status) VALUES (?, ?, ?, ?)",     #insert a new row
+                   ("Warehouse", "Barcode scanner offline", "High", "Open"))                                                           #with these values 
+    cursor.execute("INSERT INTO tickets (department, issue, priority, status) VALUES (?, ?, ?, ?)",    #tuple fills question marks
+                   ("Logistics", "ERP delivery ETA not syncing", "Medium", "Open"))                                             #in the exact same order
 
 connection.commit()             #we basically press save
 
