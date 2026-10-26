@@ -11,7 +11,7 @@ Welcome to my Python portfolio! This repository contains a collection of project
 | *[3. Video Spec Checker](./Project%203%20-%20Video%20Spec%20Checker)* | Validates video dimensions and durations for social media platforms. | Python, hachoir |
 | *[4. Ticket Manager](./Project%204%20-%20Ticket%20Manager)* | A CLI helpdesk system with auto-ID generation and priority sorting. | Python, JSON |
 | *[5. Weather App GUI](./Project%205%20-%20Weather%20App%20GUI)* | A desktop app pulling live API data and displaying it via a GUI. | Python, tkinter, requests |
-| *[6. Enterprise Support Portal](./Project%206%20-%20Enterprise%20Support%20Portal)* | A full-stack web app with SQL database integration and Jinja templating. | Python, Flask, SQLite, HTML/CSS |
+| *[6. Enterprise Support Portal](./Project-%206%20-%20Enterprise%20Support%20Portal)* | A full-stack web app with SQL database integration and Jinja templating. | Python, Flask, SQLite, HTML/CSS |
 
 ## 🛠️ Skills Demonstrated
 - *Languages:* Python, SQL, HTML, CSS
