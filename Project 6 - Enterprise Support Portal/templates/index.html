@@ -2,7 +2,7 @@
 <html>                              <!-- all code must be inside this tag -->
 <head>                              <!-- contains info the user doesnt actually see -->
     <title>Enterprise Support Portal</title>    <!-- title of the tab -->
-    <style>                         <!-- contains CSS, controlling font,colours and width -->
+    <style>                         /* contains CSS, controlling font,colours and width */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
@@ -16,12 +16,23 @@
             border-collapse: collapse;
             background-color: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            table-layout: fixed; /* FORCES the table to obey your column widths */
         }
-        th, td {
+	    th, td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
-        }
+	        word-wrap: break-word; /* breaks long word onto the next line */
+        } 
+	
+        /* give each column a width limit */
+	    th:nth-child(1) { width: 10%; } 
+        th:nth-child(2) { width: 15%; } 
+        th:nth-child(3) { width: 45%; } 
+        th:nth-child(4) { width: 10%; } 
+        th:nth-child(5) { width: 10%; } 
+        th:nth-child(6) { width: 10%; } 
+
         th {
             background-color: #007bff;
             color: white;
@@ -35,7 +46,35 @@
 
     <h1>Enterprise Support Portal</h1>              <!-- heading 1 -->
     <p>Live view of active ERP support tickets.</p>  <!-- paragraph -->
+	
+	<!-- create box -->
+    <div style="background-color: white; padding: 20px; margin-bottom: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <h2>Submit a New Ticket</h2> <!-- subheading -->
 
+    	{% if error_message %}
+        	<p style="color: red; font-weight: bold;">{{ error_message }}</p>
+    	{% endif %}
+    
+        <!-- tag wraps around input box, POST allows us to save data, action sends to webpage -->
+    	<form method="POST" action="/"> 
+        
+            <!-- create a box the user can type in, name is label of the data for python, placeholder is grey hint text -->
+            <input type="text" name="department" placeholder="Department (e.g., IT, HR)" required style="padding: 8px; margin-right: 10px;">
+            <input type="text" name="issue" placeholder="Describe the issue..." required style="padding: 8px; margin-right: 10px; width: 40%;">
+        
+            <!-- create dropdown menu -->
+            <select name="priority" style="padding: 8px; margin-right: 10px;">
+                <option value="High">High</option>
+                <option value="Medium" selected>Medium</option> <!-- medium is default -->
+                <option value="Low">Low</option>
+            </select>
+        
+            <!-- create a clickable button, when submit clicked, everything in FORM is gathered and sent via POST-->
+            <button type="submit" style="padding: 8px 15px; background-color: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">Submit Ticket</button>
+        
+        </form>
+    </div>
+    
     <table>                         <!-- built row by row starting here -->
         <thead>                     <!-- table head -->
             <tr>                    <!-- table row -->
@@ -44,6 +83,7 @@
                 <th>Issue</th>      <!-- table header -->
                 <th>Priority</th>   <!-- table header -->
                 <th>Status</th>     <!-- table header -->
+		        <th>Action</th>	    <!-- new table header -->
             </tr>                   <!-- table row end -->
         </thead>                    <!-- thead ends -->
         <tbody>                     <!-- table body contains, actual data -->
@@ -56,6 +96,11 @@
                 <td>{{ ticket[2] }}</td>    <!-- table data -->
                 <td>{{ ticket[3] }}</td>    <!-- table data -->
                 <td>{{ ticket[4] }}</td>    <!-- table data -->
+		
+		        <td>
+    				<!-- A link that goes to /delete/[ticket id]. The confirm() adds a popup warning! -->
+    			    <a href="/delete/{{ ticket[0] }}" onclick="return confirm('Are you sure you want to delete this ticket?');" style="color: red; text-decoration: none; font-weight: bold;">Delete</a>
+		        </td>
             </tr>
             {% endfor %}            <!-- stops loop -->
             
